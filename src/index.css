@@ -1,0 +1,264 @@
+/* src/index.css */
+
+/* Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base */
+html, body, #root {
+  height: 100%;
+  font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #fff;
+}
+
+/* -- Shadows & helpers -- */
+/* shadow-poster should be defined in tailwind.config as 'poster' shadow. poster-shadow uses it */
+.poster-shadow {
+  @apply rounded-xl shadow-poster;
+}
+
+/* Movie card container (ensures uniform card sizing) */
+.movie-card {
+  @apply flex flex-col overflow-hidden bg-white rounded-xl;
+}
+
+/* Poster area fixed responsive heights */
+.movie-card .poster-wrap {
+  width: 100%;
+  /* desktop taller, tablet medium, mobile smaller */
+  height: 320px;
+}
+@media (min-width: 768px) {
+  .movie-card .poster-wrap { height: 340px; }
+}
+@media (min-width: 1024px) {
+  .movie-card .poster-wrap { height: 360px; }
+}
+
+/* Purple tile bar under posters */
+.tile-bar {
+  @apply text-white text-xs font-semibold py-3 text-center rounded-b-md;
+  background: #5B2B7E; /* reelPurple fallback */
+  text-transform: uppercase;
+  letter-spacing: .02em;
+}
+
+/* PG badge: circular badge in top-right of poster */
+.pg-badge {
+  @apply absolute top-3 right-3 text-xs font-semibold text-white flex items-center justify-center;
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  background: #7b56a8; /* slightly lighter purple */
+  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+  padding: 0.25rem;
+}
+
+/* Ribbon for advance booking (rotated) */
+.ribbon {
+  position: absolute;
+  left: 8px;
+  top: 10px;
+  background: linear-gradient(135deg,#ff6a8a,#ff507c);
+  color: #fff;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  transform: rotate(-20deg);
+  border-radius: 3px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  z-index: 10;
+}
+
+/* Detail panel (large dark panel) */
+.detail-panel {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  background: linear-gradient(180deg,#000,#000);
+}
+
+/* Book button gradient + sizing */
+.btn-book {
+  @apply inline-flex items-center gap-3 px-6 py-3 rounded-full text-white font-semibold;
+  background: linear-gradient(90deg, #3d0c5d 0%, #6a2d9b 100%);
+  box-shadow: 0 8px 24px rgba(61,12,93,0.22);
+}
+
+/* small play button */
+.btn-play {
+  @apply inline-flex items-center justify-center w-12 h-12 rounded-full border;
+  background: #111; /* fallback */
+  border-color: rgba(255,255,255,0.06);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+/* Typography tweaks used in the detail panel */
+.detail-panel h2 {
+  letter-spacing: -0.01em;
+  line-height: 1.03;
+}
+
+.detail-panel .muted {
+  color: rgba(255,255,255,0.72);
+}
+
+/* small utility: center container width used by detail panel */
+.max-centered {
+  max-width: 1152px; /* matches max-w-6xl in Tailwind */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Hover zoom for poster images */
+.movie-card img {
+  transition: transform 300ms ease;
+  will-change: transform;
+}
+
+/* Prevent image overflow issues */
+.movie-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Accessibility focus outline */
+.movie-card:focus {
+  outline: 3px solid rgba(91,43,126,0.18);
+  outline-offset: 3px;
+}
+
+/* Small responsive tweaks for the tile text size */
+@media (max-width: 640px) {
+  .tile-bar { font-size: 11px; padding: 10px 6px; }
+  .pg-badge { width: 34px; height: 34px; font-size: 11px; }
+}
+
+
+/* Banner custom styles (add to src/index.css) */
+
+./* ---------- Banner & thumbnails (add to bottom of src/index.css) ---------- */
+
+/* ensure Tailwind directives are left at top of file: 
+   @tailwind base; @tailwind components; @tailwind utilities;
+*/
+
+/* ---------- Banner & thumbnails (centered medium thumbs) ---------- */
+
+/* hero layers (two stacked layers are used to crossfade) */
+/* -----------------------------------------
+   HERO BACKGROUND LAYERS
+-------------------------------------------- */
+.banner-hero-layer {
+  background-size: cover;
+  background-position: right center;
+  filter: saturate(1) contrast(0.98);
+  transition: opacity 600ms ease-out;
+}
+
+/* -----------------------------------------
+   ARROW BUTTONS
+-------------------------------------------- */
+.banner-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  border: 0;
+}
+.banner-arrow.left-2 { left: 8px; }
+.banner-arrow.right-2 { right: 8px; }
+
+/* -----------------------------------------
+   THUMBNAIL (MAIN)
+-------------------------------------------- */
+/* ---------- CENTERED THUMBNAILS (fixed centered row) ---------- */
+
+/* main thumb */
+/* ---------- LEFT-ALIGNED THUMBNAILS ---------- */
+
+.thumb-medium {
+  width: 220px;
+  height: 120px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 14px;
+  border: 6px solid rgba(255,255,255,0.06);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.35);
+  overflow: hidden;
+  transition: transform .28s ease, box-shadow .28s ease;
+}
+
+.thumb-medium:hover,
+.thumb-medium:focus {
+  transform: translateY(-6px) scale(1.02);
+}
+
+.thumb-medium-active {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 22px 48px rgba(0,0,0,0.45);
+}
+
+/* reflection */
+.thumb-reflect {
+  width: 220px;
+  height: 36px;
+  margin-top: 8px;
+  background-size: cover;
+  background-position: center;
+  transform: scaleY(-1);
+  filter: blur(3px) saturate(0.7) contrast(0.85);
+  opacity: 0.28;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0));
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0));
+}
+
+/* Outer container stays full width */
+.absolute.inset-x-0.-bottom-10 {
+  width: 100%;
+}
+
+.pointer-events-auto.mx-auto {
+  display: flex;
+  justify-content: flex-end;   /* MOVE TO RIGHT SIDE */
+  align-items: flex-end;
+  gap: 1.5rem;
+
+  max-width: 1200px;
+  width: 100%;
+  padding-right: 20px;         /* OPTIONAL: small 20px shift right */
+  padding-left: 1rem;
+  margin-left: auto;           /* PUSH TO RIGHT */
+  margin-right: 0;
+}
+
+
+
+/* responsive */
+@media (max-width: 1024px) {
+  .thumb-medium { width: 180px; height: 98px; }
+  .thumb-reflect { width: 180px; height: 32px; }
+}
+
+@media (max-width: 640px) {
+  .thumb-medium { width: 140px; height: 76px; }
+  .thumb-reflect { width: 140px; height: 26px; }
+}
